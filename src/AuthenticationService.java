@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class AuthenticationService implements IAuthenticationService {
     private ArrayList<User> users;
@@ -7,8 +8,8 @@ public class AuthenticationService implements IAuthenticationService {
 
     public AuthenticationService(ArrayList<User> users)
     {
-        this.users = new ArrayList<>();
-        this.users = users;
+        users = new ArrayList<>();
+        users.add(new User("test", "test"));
     }
 
 
@@ -18,19 +19,24 @@ public class AuthenticationService implements IAuthenticationService {
     public User signUp(String username, String password) {
         for(User user : users) {
             if(user.getUsername().equals(username)){
-                return System.println("Username is already taken");
+                System.out.println("Username is already taken");
+                return null;
             }
 
         }
         User newUser = new User(username, password);
         users.add(newUser);
         return newUser;
-
     }
     // TODO Now: Implement the logIn method to return the user if the username and password match, and null otherwise
     @Override
-    public User logIn(String username, String password)
-    {
-
+    public User logIn(String username, String password) {
+        for (User user : users){
+            if (user.getUsername().equals(username) && user.getPassword().equals(password))
+            {
+                return user;
+            }
+        }
+    return null;
     }
 }
